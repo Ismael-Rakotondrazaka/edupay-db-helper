@@ -9,7 +9,7 @@ const academicSessionsData = Array.from(
     return {
       year,
     };
-  }
+  },
 );
 
 export const createAcademicSessions = async (arg: {

@@ -11,8 +11,8 @@ export const createEquipmentAmounts = async (arg: {
     value: number;
   }[] = [];
 
-  let startAmount = 100_000;
-  let startAmountIncrement = 50_000;
+  const startAmount = 100_000;
+  const startAmountIncrement = 50_000;
 
   for (let i = 0; i < levels.length; i++) {
     const level = levels[i];

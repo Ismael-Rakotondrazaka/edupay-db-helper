@@ -11,13 +11,13 @@ const prisma = new PrismaClient({
 });
 
 prisma.$on("query", (event) => {
-  console.log(
-    "/* -------------------------------------------------------------------------- */"
+  console.info(
+    "/* -------------------------------------------------------------------------- */",
   );
-  console.log("Query: " + event.query);
-  console.log("Params: " + event.params);
-  console.log(
-    "/* -------------------------------------------------------------------------- */"
+  console.info("Query: " + event.query);
+  console.info("Params: " + event.params);
+  console.info(
+    "/* -------------------------------------------------------------------------- */",
   );
 });
 
@@ -31,7 +31,7 @@ const main = async () => {
   };
   const gender = genderMap[sexType];
 
-  const student = await prisma.student.create({
+  await prisma.student.create({
     data: {
       levelId: 2,
       name: `${firstName} ${lastName}`,
