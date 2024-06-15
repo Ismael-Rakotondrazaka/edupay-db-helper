@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model AcademicSession {
+  id       Int       @id @default(autoincrement())
+  year     Int
+  students Student[]
+  payments Payment[]
+}
+
+model Faculty {
+  id       Int       @id @default(autoincrement())
+  name     String
+  students Student[]
+}
+
+model Level {
+  id              Int              @id @default(autoincrement())
+  name            String
+  amount          MonthAmount?
+  equipmentAmount EquipmentAmount?
+  students        Student[]
+  payments        Payment[]
+}
+
+model EquipmentAmount {
+  id        Int      @id @default(autoincrement())
+  value     Int
+  levelId   Int      @unique
+  level     Level    @relation(fields: [levelId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MonthAmount {
+  id        Int      @id @default(autoincrement())
+  value     Int
+  levelId   Int      @unique
+  level     Level    @relation(fields: [levelId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PaymentPeriod {
+  EQUIPMENT
+  JANUARY
+  FEBRUARY
+  MARCH
+  APRIL
+  MAY
+  JUNE
+  JULY
+  AUGUST
+  SEPTEMBER
+  OCTOBER
+  NOVEMBER
+  DECEMBER
+}
+
+model PaymentItem {
+  id        Int           @id @default(autoincrement())
+  paymentId String
+  amount    Int
+  payment   Payment       @relation(fields: [paymentId], references: [id])
+  period    PaymentPeriod
+}
+
+model Payment {
+  id                String          @id
+  studentId         String
+  student           Student         @relation(fields: [studentId], references: [id])
+  levelId           Int
+  level             Level           @relation(fields: [levelId], references: [id])
+  academicSessionId Int
+  academicSession   AcademicSession @relation(fields: [academicSessionId], references: [id])
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  paymentItems      PaymentItem[]
+}
+
+model Student {
+  id                String          @id
+  name              String
+  gender            Gender
+  birthDate         DateTime
+  email             String          @unique
+  facultyId         Int
+  faculty           Faculty         @relation(fields: [facultyId], references: [id])
+  levelId           Int
+  level             Level           @relation(fields: [levelId], references: [id])
+  academicSessionId Int
+  academicSession   AcademicSession @relation(fields: [academicSessionId], references: [id])
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  payments          Payment[]
+}
