@@ -37,7 +37,7 @@ const createPaymentItems = (arg: {
     faker.number.int({
       min: 0,
       max: Math.floor(allPeriods.length / 2),
-    })
+    }),
   );
 
   return periods.reduce(
@@ -64,7 +64,7 @@ const createPaymentItems = (arg: {
 
       return prev;
     },
-    [] as Prisma.PaymentItemCreateManyPaymentInput[]
+    [] as Prisma.PaymentItemCreateManyPaymentInput[],
   );
 };
 
@@ -119,15 +119,15 @@ export const createPayments = async (arg: {
         },
         createdAt: faker.date.past(),
       };
-    }
+    },
   );
 
   const payments = await Promise.all(
     data.map((dataInput) =>
       prisma.payment.create({
         data: dataInput,
-      })
-    )
+      }),
+    ),
   );
 
   return payments;

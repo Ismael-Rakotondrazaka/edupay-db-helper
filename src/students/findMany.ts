@@ -1,13 +1,4 @@
-import {
-  AcademicSession,
-  EquipmentAmount,
-  Faculty,
-  Level,
-  MonthAmount,
-  Payment,
-  PrismaClient,
-  Student,
-} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient({
   log: [
@@ -19,18 +10,18 @@ const prisma = new PrismaClient({
 });
 
 prisma.$on("query", (event) => {
-  console.log(
-    "/* -------------------------------------------------------------------------- */"
+  console.info(
+    "/* -------------------------------------------------------------------------- */",
   );
-  console.log("Query: " + event.query);
-  console.log("Params: " + event.params);
-  console.log(
-    "/* -------------------------------------------------------------------------- */"
+  console.info("Query: " + event.query);
+  console.info("Params: " + event.params);
+  console.info(
+    "/* -------------------------------------------------------------------------- */",
   );
 });
 
 const main = async () => {
-  const students = await prisma.student.findMany({
+  await prisma.student.findMany({
     include: {
       level: true,
       academicSession: true,

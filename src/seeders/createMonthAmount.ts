@@ -1,4 +1,4 @@
-import { MonthAmount, Level, PrismaClient } from "@prisma/client";
+import { Level, MonthAmount, PrismaClient } from "@prisma/client";
 
 export const createMonthAmounts = async (arg: {
   prisma: PrismaClient;
@@ -11,8 +11,8 @@ export const createMonthAmounts = async (arg: {
     value: number;
   }[] = [];
 
-  let startAmount = 10_000;
-  let startAmountIncrement = 5_000;
+  const startAmount = 10_000;
+  const startAmountIncrement = 5_000;
 
   for (let i = 0; i < levels.length; i++) {
     const level = levels[i];

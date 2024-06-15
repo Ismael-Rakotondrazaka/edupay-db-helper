@@ -1,3 +1,5 @@
+import { SexType } from "@faker-js/faker";
+import { faker } from "@faker-js/faker/locale/fr";
 import {
   AcademicSession,
   Faculty,
@@ -7,8 +9,6 @@ import {
   PrismaClient,
   Student,
 } from "@prisma/client";
-import { faker } from "@faker-js/faker/locale/fr";
-import { SexType } from "@faker-js/faker";
 
 export const createStudents = async (arg: {
   prisma: PrismaClient;
@@ -29,7 +29,6 @@ export const createStudents = async (arg: {
     const level = levels[i];
     const studentsCount = 10;
     for (let j = 0; j < studentsCount; j++) {
-      const studentNumber = i * studentsCount + j + 1;
       const firstName = faker.person.firstName();
       const lastName = faker.person.lastName();
       const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`;
@@ -73,7 +72,7 @@ export const createStudents = async (arg: {
           max: 30,
           min: 20,
         },
-      }
+      },
     ),
   });
 

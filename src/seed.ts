@@ -4,7 +4,6 @@ import {
   Faculty,
   Level,
   MonthAmount,
-  Payment,
   PrismaClient,
   Student,
 } from "@prisma/client";
@@ -85,7 +84,7 @@ const main = async () => {
   /* --------------------------------- Payment -------------------------------- */
   console.time("Payment seed duration");
 
-  const payments: Payment[] = await createPayments({
+  await createPayments({
     prisma,
     equipmentAmounts,
     monthAmounts,
