@@ -93,6 +93,11 @@ export const createPayments = async (arg: {
           casing: "lower",
           length: 5,
         }),
+        level: {
+          connect: {
+            id: student.levelId,
+          },
+        },
         academicSession: {
           connect: {
             id: student.academicSessionId,
