@@ -36,4 +36,6 @@ FROM "public"."Payment"
     INNER JOIN "public"."AcademicSession" "Student.AcademicSession" ON "public"."Student"."academicSessionId" = "Student.AcademicSession"."id"
     INNER JOIN "public"."Faculty" "Student.Faculty" ON "public"."Student"."facultyId" = "Student.Faculty"."id"
     INNER JOIN "public"."PaymentItem" ON "public"."Payment"."id" = "public"."PaymentItem"."paymentId"
-ORDER BY "public"."Payment"."updatedAt" DESC;
+WHERE "public"."Payment"."id" = 'elrpm'
+ORDER BY "public"."Payment"."updatedAt" DESC,
+    "public"."PaymentItem"."id" ASC;

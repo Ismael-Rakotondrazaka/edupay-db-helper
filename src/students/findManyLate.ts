@@ -21,27 +21,35 @@ prisma.$on("query", (event) => {
 });
 
 const main = async () => {
-  const payments = await prisma.payment.findMany({
+  const students = await prisma.student.findMany({
+    where: {
+      payments: {
+        none: {
+          academicSessionId: 3,
+          paymentItems: {
+            some: {
+              period: "EQUIPMENT",
+            },
+          },
+        },
+      },
+    },
     include: {
       level: true,
       academicSession: true,
-      student: {
-        include: {
-          academicSession: true,
-          faculty: true,
-          level: true,
-        },
-      },
-      paymentItems: true,
+      faculty: true,
     },
     orderBy: [
       {
-        createdAt: "desc",
+        name: "asc",
+      },
+      {
+        facultyId: "asc",
       },
     ],
   });
 
-  console.info(payments.length);
+  console.info(students.length);
 };
 
 main()
