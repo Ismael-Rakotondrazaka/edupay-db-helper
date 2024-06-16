@@ -44,7 +44,7 @@ model EquipmentAmount {
   id        Int      @id @default(autoincrement())
   value     Int
   levelId   Int      @unique
-  level     Level    @relation(fields: [levelId], references: [id])
+  level     Level    @relation(fields: [levelId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -53,7 +53,7 @@ model MonthAmount {
   id        Int      @id @default(autoincrement())
   value     Int
   levelId   Int      @unique
-  level     Level    @relation(fields: [levelId], references: [id])
+  level     Level    @relation(fields: [levelId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -78,18 +78,18 @@ model PaymentItem {
   id        Int           @id @default(autoincrement())
   paymentId String
   amount    Int
-  payment   Payment       @relation(fields: [paymentId], references: [id])
+  payment   Payment       @relation(fields: [paymentId], references: [id], onDelete: Cascade)
   period    PaymentPeriod
 }
 
 model Payment {
   id                String          @id
   studentId         String
-  student           Student         @relation(fields: [studentId], references: [id])
+  student           Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
   levelId           Int
-  level             Level           @relation(fields: [levelId], references: [id])
+  level             Level           @relation(fields: [levelId], references: [id], onDelete: Cascade)
   academicSessionId Int
-  academicSession   AcademicSession @relation(fields: [academicSessionId], references: [id])
+  academicSession   AcademicSession @relation(fields: [academicSessionId], references: [id], onDelete: Cascade)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   paymentItems      PaymentItem[]
@@ -102,11 +102,11 @@ model Student {
   birthDate         DateTime
   email             String          @unique
   facultyId         Int
-  faculty           Faculty         @relation(fields: [facultyId], references: [id])
+  faculty           Faculty         @relation(fields: [facultyId], references: [id], onDelete: Cascade)
   levelId           Int
-  level             Level           @relation(fields: [levelId], references: [id])
+  level             Level           @relation(fields: [levelId], references: [id], onDelete: Cascade)
   academicSessionId Int
-  academicSession   AcademicSession @relation(fields: [academicSessionId], references: [id])
+  academicSession   AcademicSession @relation(fields: [academicSessionId], references: [id], onDelete: Cascade)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   payments          Payment[]
